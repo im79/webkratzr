@@ -1,0 +1,15 @@
+{
+  "name": "webkratzr",
+  "version": "1.0.1",
+  "description": "kratz kratz and twitt",
+  "main": "none",
+  "dependencies": {
+    "request": "",
+    "cheerio": ""
+  },
+  "devDependencies": {},
+  "scripts": {
+  },
+  "author": "im79",
+  "license": "MIT"
+}
