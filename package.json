@@ -5,7 +5,8 @@
   "main": "none",
   "dependencies": {
     "request": "",
-    "cheerio": ""
+    "cheerio": "",
+    "twitter" : ""
   },
   "devDependencies": {},
   "scripts": {
