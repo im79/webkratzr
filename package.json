@@ -6,7 +6,8 @@
   "dependencies": {
     "request": "",
     "cheerio": "",
-    "twitter" : ""
+    "twitter" : "",
+    "node-schedule" : ""
   },
   "devDependencies": {},
   "scripts": {
