@@ -11,6 +11,7 @@
   },
   "devDependencies": {},
   "scripts": {
+      "start": "node kratz.js"
   },
   "author": "im79",
   "license": "MIT"
