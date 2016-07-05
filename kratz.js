@@ -8,17 +8,17 @@ if(process.env["consumer_key"]) {
 	var config = require('./settings.json');
 }
 
-
-
-var http = require('http');
-
 const PORT = process.env.PORT || 5000;
 
 
-
+var http = require('http');
 var schedule = require('node-schedule');
 var twitter = require('twitter');
-var request = require("request"), cheerio = require("cheerio"), url = "http://www.tagesspiegel.de/berlin/";
+var request = require("request");
+var cheerio = require("cheerio");
+
+var url = "http://www.tagesspiegel.de/berlin/";
+
 
 
 MyApp = {
@@ -64,16 +64,12 @@ MyApp = {
 };
 
 
-
 function handleRequest(request, response){
     response.end('kratz ' + request.url);
 }
 
 var server = http.createServer(handleRequest);
 
-server.listen(PORT, function(){
-  
-});
-
+server.listen(PORT, function(){ });
 
 MyApp.appinit();
