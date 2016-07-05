@@ -49,7 +49,7 @@ MyApp = {
 
     kratzSchedule: function (){
       var rule = new schedule.RecurrenceRule();
-      rule.second = 0;
+      rule.minute = 45;
       var j = schedule.scheduleJob(rule, function(){
         MyApp.doKratz();
       });
