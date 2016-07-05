@@ -1,4 +1,14 @@
-var config = require('./settings.json');
+
+if(process.env["consumer_key"]) {
+	var config = {};
+	config.consumer_key =  process.env["consumer_key"];
+	config.consumer_secret =  process.env["consumer_secret"];
+	config.access_token_key =  process.env["access_token_key"];
+	config.access_token_secret =  process.env["access_token_secret"];
+} else{
+	var config = require('./settings.json');
+}
+
 
 var schedule = require('node-schedule');
 var twitter = require('twitter');
