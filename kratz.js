@@ -1,4 +1,3 @@
-
 if(process.env["consumer_key"]) {
 	var config = {};
 	config.consumer_key =  process.env["consumer_key"];
@@ -8,6 +7,13 @@ if(process.env["consumer_key"]) {
 } else{
 	var config = require('./settings.json');
 }
+
+
+
+var http = require('http');
+
+const PORT = process.env.PORT || 5000;
+
 
 
 var schedule = require('node-schedule');
@@ -56,5 +62,18 @@ MyApp = {
     }
 
 };
+
+
+
+function handleRequest(request, response){
+    response.end('kratz ' + request.url);
+}
+
+var server = http.createServer(handleRequest);
+
+server.listen(PORT, function(){
+  
+});
+
 
 MyApp.appinit();

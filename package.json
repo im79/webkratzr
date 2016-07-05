@@ -4,6 +4,7 @@
   "description": "kratz kratz and twitt",
   "main": "none",
   "dependencies": {
+    "http":"",
     "request": "",
     "cheerio": "",
     "twitter" : "",
