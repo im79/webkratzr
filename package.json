@@ -15,5 +15,9 @@
       "start": "node kratz.js"
   },
   "author": "im79",
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/im79/webkratzr.git"
+  }
 }
