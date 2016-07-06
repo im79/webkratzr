@@ -10,14 +10,15 @@ if(process.env["consumer_key"]) {
 
 const PORT = process.env.PORT || 5000;
 
-
-var http = require('http');
-var schedule = require('node-schedule');
-var twitter = require('twitter');
-var request = require("request");
-var cheerio = require("cheerio");
+var http = require('http'),
+    schedule = require('node-schedule'),
+    twitter = require('twitter'),
+    request = require("request"),
+    cheerio = require("cheerio");
 
 var url = "http://www.tagesspiegel.de/berlin/";
+
+
 
 
 
@@ -70,6 +71,7 @@ function handleRequest(request, response){
 
 var server = http.createServer(handleRequest);
 
-server.listen(PORT, function(){ });
+server.listen(PORT, function(){});
+
 
 MyApp.appinit();
