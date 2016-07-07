@@ -10,8 +10,7 @@ if(process.env["consumer_key"]) {
 
 const PORT = process.env.PORT || 5000;
 
-var http = require('http'),
-    schedule = require('node-schedule'),
+var	schedule = require('node-schedule'),
     twitter = require('twitter'),
     request = require("request"),
     cheerio = require("cheerio");
@@ -65,13 +64,52 @@ MyApp = {
 };
 
 
-function handleRequest(request, response){
-    response.end('kratz ' + request.url);
-}
 
-var server = http.createServer(handleRequest);
 
-server.listen(PORT, function(){});
+var express = require('express'),
+    app = express(),
+    session = require('express-session');
+app.use(session({
+    secret: '2C44-4D44-WppQ38S',
+    resave: true,
+    saveUninitialized: true
+}));
+
+// Authentication and Authorization Middleware
+var auth = function(req, res, next) {
+  if (req.session && req.session.user === "im" && req.session.admin)
+    return next();
+  else
+    return res.sendStatus(401);
+};
+
+// Login endpoint
+app.get('/login', function (req, res) {
+  if (!req.query.username || !req.query.password) {
+    res.send('login failed (no user/pw)');
+  } else if(req.query.username == "im" && req.query.password == "kratz") {
+    req.session.user = "im";
+    req.session.admin = true;
+    res.send("login success!");
+  } else {
+		res.send("login failed (wrong user/pw)");
+	}
+});
+
+// Logout endpoint
+app.get('/logout', function (req, res) {
+  req.session.destroy();
+  res.send("logout success!");
+});
+
+// Get content endpoint
+app.get('/content', auth, function (req, res) {
+    res.send("You can only see this after you've logged in.");
+});
+
+app.listen(PORT);
+console.log("app running at port " + PORT);
+
 
 
 MyApp.appinit();
