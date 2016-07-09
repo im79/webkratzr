@@ -9,7 +9,8 @@
     "request": "",
     "cheerio": "",
     "twitter" : "",
-    "node-schedule" : ""
+    "node-schedule" : "",
+    "mustache":""
   },
   "devDependencies": {},
   "scripts": {

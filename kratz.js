@@ -13,11 +13,19 @@ const PORT = process.env.PORT || 5000;
 var	schedule = require('node-schedule'),
     twitter = require('twitter'),
     request = require("request"),
-    cheerio = require("cheerio");
+    cheerio = require("cheerio")
+		mustache = require('mustache'),
+		fs = require('fs');
 
 var url = "http://www.tagesspiegel.de/berlin/";
 
-
+//get master template
+fs.readFile('templates/master.html', 'utf8', function (err,data) {
+  if (err) {
+    return console.log(err);
+  }
+  mastertemplate = data;
+});
 
 
 
@@ -60,7 +68,6 @@ MyApp = {
         MyApp.doKratz();
       });
     }
-
 };
 
 
@@ -69,11 +76,14 @@ MyApp = {
 var express = require('express'),
     app = express(),
     session = require('express-session');
+
 app.use(session({
     secret: '2C44-4D44-WppQ38S',
     resave: true,
     saveUninitialized: true
 }));
+
+app.use(express.static(__dirname));
 
 // Authentication and Authorization Middleware
 var auth = function(req, res, next) {
@@ -103,8 +113,16 @@ app.get('/logout', function (req, res) {
 });
 
 // Get content endpoint
-app.get('/content', auth, function (req, res) {
-    res.send("You can only see this after you've logged in.");
+app.get('/', auth, function (req, res) {
+	var view = {
+  	title: "webkratzr admin",
+		heading: "Welcome to admin area",
+		content: "This page content is secure."
+	};
+
+	var output = mustache.render(mastertemplate, view);
+
+  res.send(output);
 });
 
 app.listen(PORT);
