@@ -74,6 +74,7 @@ MyApp = {
 
 
 var express = require('express'),
+		bodyParser = require("body-parser"),
     app = express(),
     session = require('express-session');
 
@@ -82,27 +83,41 @@ app.use(session({
     resave: true,
     saveUninitialized: true
 }));
-
 app.use(express.static(__dirname));
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+
 
 // Authentication and Authorization Middleware
 var auth = function(req, res, next) {
-  if (req.session && req.session.user === "im" && req.session.admin)
+  if (req.session && req.session.user === "im" && req.session.admin){
     return next();
-  else
-    return res.sendStatus(401);
+  }else{
+    return res.redirect('/login');
+	}
 };
 
 // Login endpoint
 app.get('/login', function (req, res) {
   if (!req.query.username || !req.query.password) {
-    res.send('login failed (no user/pw)');
+    res.send('<form action="/login" method="post"><p>Username: <input type="text" name="username" /></p><p>PW: <input type="password" name="password" /></p><p><input type="submit" /></p></form>');
   } else if(req.query.username == "im" && req.query.password == "kratz") {
     req.session.user = "im";
     req.session.admin = true;
     res.send("login success!");
   } else {
 		res.send("login failed (wrong user/pw)");
+	}
+});
+
+app.post('/login', function (req, res) {
+  if(req.body.username == "im" && req.body.password == "kratz") {
+    req.session.user = "im";
+    req.session.admin = true;
+    res.redirect('/');
+  } else {
+		res.send("POSTED but login failed (wrong user/pw)");
 	}
 });
 
@@ -130,4 +145,4 @@ console.log("app running at port " + PORT);
 
 
 
-MyApp.appinit();
+// MyApp.appinit();
