@@ -8,16 +8,22 @@ if(process.env["consumer_key"]) {
 	var config = require('./settings.json');
 }
 
+ //constants
 const PORT = process.env.PORT || 5000;
+const url = "http://www.tagesspiegel.de/berlin/";
 
-var	schedule = require('node-schedule'),
-    twitter = require('twitter'),
-    request = require("request"),
-    cheerio = require("cheerio")
-		mustache = require('mustache'),
-		fs = require('fs');
 
-var url = "http://www.tagesspiegel.de/berlin/";
+//includes
+var	mustache = require('mustache'),
+		fs = require('fs'),
+		express = require('express'),
+		bodyParser = require("body-parser"),
+		app = express(),
+		session = require('express-session');
+
+readAndTweet = require('./app.inc.js'),
+
+
 
 //get master template
 fs.readFile('templates/master.html', 'utf8', function (err,data) {
@@ -29,54 +35,6 @@ fs.readFile('templates/master.html', 'utf8', function (err,data) {
 
 
 
-MyApp = {
-    appinit: function() {
-        MyApp.doKratz();
-        MyApp.kratzSchedule();
-    },
-
-    doKratz: function() {
-      request(url, function (error, response, body) {
-        if (!error) {
-          var $ = cheerio.load(body), headline = $(".hcf-headline").first().html();
-          console.log("Letzte Nachricht: " + headline + "");
-
-          var client = new twitter({
-            consumer_key: config.consumer_key,
-            consumer_secret: config.consumer_secret,
-            access_token_key: config.access_token_key,
-            access_token_secret: config.access_token_secret
-          });
-          var params = {screen_name: 'nodejs'};
-          client.post('statuses/update', {status: 'News: ' + headline},  function(error, tweet, response){
-            if(error) {
-              console.log(JSON.stringify(error) );
-            } else{
-              console.log('OK');
-            }
-          });
-        } else {
-          console.log("We’ve encountered an error: " + error);
-        }
-      });
-    },
-
-    kratzSchedule: function (){
-      var rule = new schedule.RecurrenceRule();
-      rule.minute = 45;
-      var j = schedule.scheduleJob(rule, function(){
-        MyApp.doKratz();
-      });
-    }
-};
-
-
-
-
-var express = require('express'),
-		bodyParser = require("body-parser"),
-    app = express(),
-    session = require('express-session');
 
 app.use(session({
     secret: '2C44-4D44-WppQ38S',
@@ -145,4 +103,5 @@ console.log("app running at port " + PORT);
 
 
 
-// MyApp.appinit();
+
+readAndTweet.appinit(config, url, 45);
