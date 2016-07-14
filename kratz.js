@@ -21,12 +21,14 @@ var	mustache = require('mustache'),
 		app = express(),
 		session = require('express-session');
 
-readAndTweet = require('./app.inc.js'),
+readAndTweet = require('./app.inc.js');
 
 
 
 //get master template
-fs.readFile('templates/master.html', 'utf8', function (err,data) {
+
+var mastertpl = 'templates/master.html';
+fs.readFile(mastertpl, 'utf8', function (err,data) {
   if (err) {
     return console.log(err);
   }
