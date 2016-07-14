@@ -34,8 +34,6 @@ fs.readFile('templates/master.html', 'utf8', function (err,data) {
 });
 
 
-
-
 app.use(session({
     secret: '2C44-4D44-WppQ38S',
     resave: true,
@@ -100,8 +98,5 @@ app.get('/', auth, function (req, res) {
 
 app.listen(PORT);
 console.log("app running at port " + PORT);
-
-
-
 
 readAndTweet.appinit(config, url, 45);
