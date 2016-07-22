@@ -1,5 +1,11 @@
 module.exports = function(grunt) {
 
+  // Load grunt tasks automatically
+  require('load-grunt-tasks')(grunt);
+  // Time how long tasks take. Can help when optimizing build times
+  require('time-grunt')(grunt);
+
+
   // Project configuration.
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
@@ -9,7 +15,7 @@ module.exports = function(grunt) {
       },
       my_target: {
         files: {
-			'public/all.min.js': ['node_modules/jquery/dist/jquery.js', 'node_modules/bootstrap/dist/js/bootstrap.js', 'my.js']
+			'public/all.min.js': ['bower_components/jquery/dist/jquery.js', 'bower_components/dist/js/bootstrap.js', 'src/my.js']
         }
       }
     },
@@ -20,13 +26,13 @@ module.exports = function(grunt) {
       },
       target: {
         files: {
-          'public/all.min.css': ['node_modules/bootstrap/dist/css/bootstrap.css', 'my.css']
+          'public/all.min.css': ['bower_components/bootstrap/dist/css/bootstrap.css', 'src/my.css']
         }
       }
     },
     watch: {
       scripts: {
-        files: ['my.css', 'my.js', 'index.html', 'Gruntfile.js'],
+        files: ['src/my.css', 'src/my.js', 'templates/master.html', 'Gruntfile.js'],
         tasks: ['default'],
         options: {
           livereload: true,

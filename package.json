@@ -13,7 +13,17 @@
     "node-schedule" : "",
     "mustache":""
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "grunt":"~0.4.5",
+    "grunt-contrib-clean": "*",
+    "grunt-contrib-concat": "*",
+    "grunt-contrib-copy": "*",
+    "grunt-contrib-cssmin":"*",
+    "grunt-contrib-uglify":"*",
+    "grunt-contrib-watch":"*",
+    "load-grunt-tasks": "*",
+    "time-grunt": "*"
+  },
   "scripts": {
       "start": "node kratz.js"
   },
