@@ -24,16 +24,23 @@ var	mustache = require('mustache'),
 readAndTweet = require('./app.inc.js');
 
 
+//TEMPLATES
 
 //get master template
-
 var mastertpl = 'templates/master.html';
 fs.readFile(mastertpl, 'utf8', function (err,data) {
-  if (err) {
-    return console.log(err);
-  }
+  if (err) {  return console.log(err);}
   mastertemplate = data;
 });
+
+//get sidebar template
+var sidebartpl = 'templates/sidebar.html';
+fs.readFile(sidebartpl, 'utf8', function (err,data) {
+  if (err) {  return console.log(err); }
+  sidebar = data;
+});
+
+
 
 
 app.use(session({
@@ -88,6 +95,7 @@ app.get('/logout', function (req, res) {
 // Get content endpoint
 app.get('/', auth, function (req, res) {
 	var view = {
+		sidebar: sidebar,
   	title: "webkratzr admin",
 		heading: "Welcome to admin area",
 		content: "This page content is secure."
