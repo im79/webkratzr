@@ -22,26 +22,10 @@ var	mustache = require('mustache'),
 		session = require('express-session');
 
 readAndTweet = require('./app.inc.js');
+buildPage = require('./page.inc.js');
 
 
-//TEMPLATES
-
-//get master template
-var mastertpl = 'templates/master.html';
-fs.readFile(mastertpl, 'utf8', function (err,data) {
-  if (err) {  return console.log(err);}
-  mastertemplate = data;
-});
-
-//get sidebar template
-var sidebartpl = 'templates/sidebar.html';
-fs.readFile(sidebartpl, 'utf8', function (err,data) {
-  if (err) {  return console.log(err); }
-  sidebar = data;
-});
-
-
-
+// run
 
 app.use(session({
     secret: '2C44-4D44-WppQ38S',
@@ -66,7 +50,12 @@ var auth = function(req, res, next) {
 // Login endpoint
 app.get('/login', function (req, res) {
   if (!req.query.username || !req.query.password) {
-    res.send('<form action="/login" method="post"><p>Username: <input type="text" name="username" /></p><p>PW: <input type="password" name="password" /></p><p><input type="submit" /></p></form>');
+
+
+    //res.send('<form action="/login" method="post"><p>Username: <input type="text" name="username" /></p><p>PW: <input type="password" name="password" /></p><p><input type="submit" /></p></form>');
+		res.send(buildPage.merge('templates/master.html', 'templates/topnavi.html','templates/sidebar.html'));
+
+
   } else if(req.query.username == "im" && req.query.password == "kratz") {
     req.session.user = "im";
     req.session.admin = true;
