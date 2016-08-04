@@ -1,13 +1,22 @@
 module.exports = function (main, topnavi, sidebar) {
 	var fs = require('fs'),
 	mustache = require('mustache');
-	
+
 	this.main = main;
 	this.topnavi = topnavi;
 	this.sidebar = sidebar;
 
+	this.setPath = function (path) {
+		this.path = path;
+	};
+
+	this.getHeading = function () {
+		if(this.path == 'login')return 'Please sign in';
+		if(this.path == 'front')return 'Welcome to front page';
+	};
+
   this.merge = function (middlepart) {
-		var output, mastercontent, topnavicontent, sidebarcontent;
+		var output, mastercontent, topnavicontent, sidebarcontent,middlepartcontent;
 
 		 // read files
 		 try {
@@ -23,9 +32,15 @@ module.exports = function (main, topnavi, sidebar) {
 		 }
 
 		 try {
-			 sidebarcontent = fs.readFileSync(this.idebar, 'utf8');
+			 sidebarcontent = fs.readFileSync(this.sidebar, 'utf8');
 		 } catch (e) {
 			 sidebarcontent = '';
+		 }
+
+		 try {
+			 middlepartcontent = fs.readFileSync(middlepart, 'utf8');
+		 } catch (e) {
+			 middlepartcontent = middlepart;
 		 }
 
 
@@ -34,8 +49,8 @@ module.exports = function (main, topnavi, sidebar) {
 			topnavi: topnavicontent,
 			sidebar: sidebarcontent,
 			title: '{{title}}',
-			heading: '{{heading}}',
-			content: '{{{content}}}'
+			heading: this.getHeading(),
+			content: middlepartcontent
 		};
 
 		output = mustache.render(mastercontent, view);

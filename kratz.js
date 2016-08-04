@@ -50,18 +50,9 @@ var auth = function(req, res, next) {
 app.get('/login', function (req, res) {
   if (!req.query.username || !req.query.password) {
 
-
-    //res.send('<form action="/login" method="post"><p>Username: <input type="text" name="username" /></p><p>PW: <input type="password" name="password" /></p><p><input type="submit" /></p></form>');
-
-		//var maintemplate = buildPage.merge('templates/master.html', 'templates/topnavi.html','templates/sidebar.html');
-
-
-
 		var page =  new buildPage('templates/master.html', '','');
-		var pagecontent = page.merge('templates/master.html');
-
-		res.send(pagecontent);
-
+		page.setPath('login');
+		res.send(page.merge('templates/login.html'));
 
   } else if(req.query.username == "im" && req.query.password == "kratz") {
     req.session.user = "im";
@@ -90,16 +81,9 @@ app.get('/logout', function (req, res) {
 
 // Get content endpoint
 app.get('/', auth, function (req, res) {
-	var view = {
-		sidebar: sidebar,
-  	title: "webkratzr admin",
-		heading: "Welcome to admin area",
-		content: "This page content is secure."
-	};
-
-	var output = mustache.render(mastertemplate, view);
-
-  res.send(output);
+	var page =  new buildPage('templates/master.html', 'templates/topnavi.html','templates/sidebar.html');
+	page.setPath('front');
+	res.send(page.merge('THIS IS HIDDEN CONTENT'));
 });
 
 app.listen(PORT);
