@@ -26,13 +26,13 @@ module.exports = function(grunt) {
       },
       target: {
         files: {
-          'public/all.min.css': ['bower_components/bootstrap/dist/css/bootstrap.css', 'src/my.css']
+          'public/all.min.css': ['bower_components/bootstrap/dist/css/bootstrap.css', 'src/*.css']
         }
       }
     },
     watch: {
       scripts: {
-        files: ['src/my.css', 'src/my.js', 'templates/master.html', 'Gruntfile.js'],
+        files: ['src/*.css', 'src/my.js', 'templates/master.html', 'Gruntfile.js'],
         tasks: ['default'],
         options: {
           livereload: true,

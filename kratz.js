@@ -22,11 +22,10 @@ var	mustache = require('mustache'),
 		session = require('express-session');
 
 readAndTweet = require('./app.inc.js');
-buildPage = require('./page.inc.js');
+var buildPage = require('./page.inc.js');
 
 
-// run
-
+// run app
 app.use(session({
     secret: '2C44-4D44-WppQ38S',
     resave: true,
@@ -53,7 +52,15 @@ app.get('/login', function (req, res) {
 
 
     //res.send('<form action="/login" method="post"><p>Username: <input type="text" name="username" /></p><p>PW: <input type="password" name="password" /></p><p><input type="submit" /></p></form>');
-		res.send(buildPage.merge('templates/master.html', 'templates/topnavi.html','templates/sidebar.html'));
+
+		//var maintemplate = buildPage.merge('templates/master.html', 'templates/topnavi.html','templates/sidebar.html');
+
+
+
+		var page =  new buildPage('templates/master.html', '','');
+		var pagecontent = page.merge('templates/master.html');
+
+		res.send(pagecontent);
 
 
   } else if(req.query.username == "im" && req.query.password == "kratz") {
