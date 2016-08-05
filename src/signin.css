@@ -1,4 +1,12 @@
 
+.path-login h1.page-header {
+  text-align: center;
+}
+
+.path-login #main {
+  margin: 0 auto !important;
+  width:100% !important;
+}
 
 .form-signin {
   max-width: 330px;

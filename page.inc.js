@@ -46,6 +46,7 @@ module.exports = function (main, topnavi, sidebar) {
 
 		// template engine
 		var view = {
+			bodyclass: 'path-' + this.path,
 			topnavi: topnavicontent,
 			sidebar: sidebarcontent,
 			title: '{{title}}',

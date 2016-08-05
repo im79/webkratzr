@@ -76,7 +76,7 @@ app.post('/login', function (req, res) {
 // Logout endpoint
 app.get('/logout', function (req, res) {
   req.session.destroy();
-  res.send("logout success!");
+  return res.redirect('/login');
 });
 
 // Get content endpoint
