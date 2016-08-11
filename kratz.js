@@ -24,6 +24,7 @@ var	mustache = require('mustache'),
 readAndTweet = require('./app.inc.js');
 var buildPage = require('./page.inc.js');
 
+//app.disable('x-powered-by');
 
 // run app
 app.use(session({
