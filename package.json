@@ -12,7 +12,9 @@
     "twitter" : "",
     "node-schedule" : "",
     "mustache":"",
-    "yandex-translate-api":""
+    "yandex-translate-api":"",
+    "node-persist":"",
+    "crypto":""
   },
   "devDependencies": {
     "grunt":"~0.4.5",

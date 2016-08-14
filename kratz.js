@@ -18,14 +18,32 @@ const url = "http://www.tagesspiegel.de/berlin/";
 var	mustache = require('mustache'),
 		fs = require('fs'),
 		express = require('express'),
-		bodyParser = require("body-parser"),
+		bodyParser = require('body-parser'),
 		app = express(),
-		session = require('express-session');
+		session = require('express-session'),
+		storage = require('node-persist'),
+		crypto = require('crypto');
 
 readAndTweet = require('./app.inc.js');
 var buildPage = require('./page.inc.js');
 
+storage.initSync();
+
+
+
 //app.disable('x-powered-by');
+
+/*
+storage.initSync();
+var batman = {
+    first: 'Ilya',
+    last: 'M',
+		password:'11bfb09146a8b8651ea33cdad7ec73c4',
+		access: '3',
+    alias: 'im'
+};
+
+*/
 
 // run app
 app.use(session({
@@ -41,8 +59,9 @@ app.use(bodyParser.json());
 
 // Authentication and Authorization Middleware
 var auth = function(req, res, next) {
-  if (req.session && req.session.user === "im" && req.session.admin){
-    return next();
+
+  if (req.session && req.session.admin){ //&& req.session.user === "im"
+			return next();
   }else{
     return res.redirect('/login');
 	}
@@ -66,6 +85,23 @@ app.get('/login', function (req, res) {
 });
 
 app.post('/login', function (req, res) {
+	storage.getItem(req.body.username, function (err, value) {
+		if(value != undefined){
+			if(storage.getItem(req.body.username).password == crypto.createHash('md5').update(req.body.password ).digest("hex")){
+				req.session.user = req.body.username;
+		    req.session.admin = true;
+		    res.redirect('/');
+			} else{
+				res.redirect('/login?error=wrongpassword');
+			}
+		} else{
+			res.redirect('/login?error=unknownuser');
+		}
+
+
+	});
+
+/*
   if(req.body.username == "im" && req.body.password == "kratz") {
     req.session.user = "im";
     req.session.admin = true;
@@ -73,6 +109,7 @@ app.post('/login', function (req, res) {
   } else {
 		res.send("POSTED but login failed (wrong user/pw)");
 	}
+	*/
 });
 
 // Logout endpoint
