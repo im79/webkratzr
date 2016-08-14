@@ -11,7 +11,8 @@
     "cheerio": "",
     "twitter" : "",
     "node-schedule" : "",
-    "mustache":""
+    "mustache":"",
+    "yandex-translate-api":""
   },
   "devDependencies": {
     "grunt":"~0.4.5",

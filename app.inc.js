@@ -15,8 +15,16 @@ module.exports = {
 
 		request(url, function (error, response, body) {
 			if (!error) {
-				var $ = cheerio.load(body), headline = $(".hcf-headline").first().html();
+
+				var $ = cheerio.load(body, { decodeEntities: false }), headline = $(".hcf-headline").first().html();
+
 				console.log("Letzte Nachricht: " + headline + "");
+
+				var translator = require('yandex-translate-api')(config.yandex_api_key);
+				translator.translate(headline, { to: 'en'}, function(err, res) {
+					console.log("Letzte Nachricht translated: " + res.text + "");
+				  headline = res.text;
+				});
 
 				var client = new twitter({
 					consumer_key: config.consumer_key,
@@ -46,5 +54,5 @@ module.exports = {
 			readAndTweet.doKratz();
 		});
 	}
-	
+
 };
