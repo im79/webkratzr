@@ -20,13 +20,12 @@ module.exports = {
 					decodeEntities: false }
 				), headline = $(".hcf-headline").first().html();
 
-				console.log("Letzte Nachricht: " + headline + "");
+				console.log("Letzte Nachricht: " + headline );
 
 				var translator = require('yandex-translate-api')(config.yandex_api_key);
 				translator.translate(headline, { to: 'en'}, function(err, res) {
 					headlinetrans = res.text;
 					console.log("Letzte Nachricht translated: " + headlinetrans + "");
-
 
 					var client = new twitter({
 						consumer_key: config.consumer_key,
@@ -34,7 +33,6 @@ module.exports = {
 						access_token_key: config.access_token_key,
 						access_token_secret: config.access_token_secret
 					});
-
 
 					var params = {
 						status: headlinetrans.toString("utf8")
@@ -50,7 +48,6 @@ module.exports = {
 					});
 
 				});
-
 
 			} else {
 				console.log("We’ve encountered an error: " + error);
