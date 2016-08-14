@@ -22,8 +22,9 @@ module.exports = {
 
 				var translator = require('yandex-translate-api')(config.yandex_api_key);
 				translator.translate(headline, { to: 'en'}, function(err, res) {
-					console.log("Letzte Nachricht translated: " + res.text + "");
+
 				  headline = res.text;
+					console.log("Letzte Nachricht translated: " + headline + "");
 				});
 
 				var client = new twitter({
@@ -32,8 +33,11 @@ module.exports = {
 					access_token_key: config.access_token_key,
 					access_token_secret: config.access_token_secret
 				});
-				var params = {screen_name: 'nodejs'};
-				client.post('statuses/update', {status: 'News: ' + headline},  function(error, tweet, response){
+				var params = {
+					screen_name: 'nodejs',
+					status: headline
+				};
+				client.post('statuses/update', params,  function(error, tweet, response){
 					if(error) {
 						console.log(JSON.stringify(error) );
 					} else{
