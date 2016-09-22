@@ -2,12 +2,11 @@ module.exports = {
 
 	appinit: function(config, url, min) {
 			readAndTweet.doKratz(config, url);
-			readAndTweet.kratzSchedule(min);
+			readAndTweet.kratzSchedule(min, config, url);
 	},
 
 	doKratz: function(config, url) {
-		var	schedule = require('node-schedule'),
-		    twitter = require('twitter'),
+		var	twitter = require('twitter'),
 		    request = require("request"),
 		    cheerio = require("cheerio")
 				mustache = require('mustache'),
@@ -55,12 +54,13 @@ module.exports = {
 		});
 	},
 
-	kratzSchedule: function (min){
+	kratzSchedule: function (min, config, url){
 		var	schedule = require('node-schedule');
 		var rule = new schedule.RecurrenceRule();
+
 		rule.minute = min;
 		var j = schedule.scheduleJob(rule, function(){
-			readAndTweet.doKratz();
+			readAndTweet.doKratz(config, url);
 		});
 	}
 

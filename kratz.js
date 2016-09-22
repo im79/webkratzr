@@ -128,4 +128,4 @@ app.get('/', auth, function (req, res) {
 app.listen(PORT);
 console.log("app running at port " + PORT);
 
-readAndTweet.appinit(config, url, 45);
+readAndTweet.appinit(config, url, 15);
