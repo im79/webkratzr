@@ -8,7 +8,7 @@ module.exports = {
 	doKratz: function(config, url) {
 		var	twitter = require('twitter'),
 		    request = require("request"),
-		    cheerio = require("cheerio")
+		    cheerio = require("cheerio"),
 				mustache = require('mustache'),
 				fs = require('fs');
 

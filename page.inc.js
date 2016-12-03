@@ -57,5 +57,5 @@ module.exports = function (main, topnavi, sidebar) {
 		output = mustache.render(mastercontent, view);
 
 		return output;
-    }
-}
+	};
+};

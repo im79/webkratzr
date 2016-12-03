@@ -1,17 +1,17 @@
-if(process.env["consumer_key"]) {
+if(process.env.consumer_key) {
 	var config = {};
-	config.consumer_key =  process.env["consumer_key"];
-	config.consumer_secret =  process.env["consumer_secret"];
-	config.access_token_key =  process.env["access_token_key"];
-	config.access_token_secret =  process.env["access_token_secret"];
-	config.yandex_api_key =  process.env["yandex_api_key"];
+	config.consumer_key =  process.env.consumer_key;
+	config.consumer_secret =  process.env.consumer_secret;
+	config.access_token_key =  process.env.access_token_key;
+	config.access_token_secret =  process.env.access_token_secret;
+	config.yandex_api_key =  process.env.yandex_api_key;
 } else{
 	var config = require('./settings.json');
 }
 
  //constants
-const PORT = process.env.PORT || 5000;
-const url = "http://www.tagesspiegel.de/berlin/";
+var PORT = process.env.PORT || 5000;
+var url = "http://www.tagesspiegel.de/berlin/";
 
 
 //includes
@@ -86,7 +86,7 @@ app.get('/login', function (req, res) {
 
 app.post('/login', function (req, res) {
 	storage.getItem(req.body.username, function (err, value) {
-		if(value != undefined){
+		if(value !== undefined){
 			if(storage.getItem(req.body.username).password == crypto.createHash('md5').update(req.body.password ).digest("hex")){
 				req.session.user = req.body.username;
 		    req.session.admin = true;
