@@ -59,7 +59,6 @@ app.use(bodyParser.json());
 
 // Authentication and Authorization Middleware
 var auth = function(req, res, next) {
-
   if (req.session && req.session.admin){ //&& req.session.user === "im"
 			return next();
   }else{
@@ -69,47 +68,39 @@ var auth = function(req, res, next) {
 
 // Login endpoint
 app.get('/login', function (req, res) {
-  if (!req.query.username || !req.query.password) {
-
-		var page =  new buildPage('templates/master.html', '','');
-		page.setPath('login');
-		res.send(page.merge('templates/login.html'));
-
-  } else if(req.query.username == "im" && req.query.password == "kratz") {
-    req.session.user = "im";
-    req.session.admin = true;
-    res.send("login success!");
-  } else {
-		res.send("login failed (wrong user/pw)");
-	}
+	var page =  new buildPage('templates/master.html', '','');
+	page.setPath('login');
+	res.send(page.merge('templates/login.html'));
 });
 
 app.post('/login', function (req, res) {
-	storage.getItem(req.body.username, function (err, value) {
-		if(value !== undefined){
-			if(storage.getItem(req.body.username).password == crypto.createHash('md5').update(req.body.password ).digest("hex")){
-				req.session.user = req.body.username;
-		    req.session.admin = true;
-		    res.redirect('/');
-			} else{
-				res.redirect('/login?error=wrongpassword');
-			}
-		} else{
-			res.redirect('/login?error=unknownuser');
-		}
 
-
-	});
-
-/*
-  if(req.body.username == "im" && req.body.password == "kratz") {
+	if(req.body.username == "im" && req.body.password == "kratz") {
     req.session.user = "im";
     req.session.admin = true;
-    res.redirect('/');
+		res.redirect('/');
+
+/*
+		storage.getItem(req.body.username, function (err, value) {
+			if(value !== undefined){
+				if(storage.getItem(req.body.username).password == crypto.createHash('md5').update(req.body.password ).digest("hex")){
+					req.session.user = req.body.username;
+			    req.session.admin = true;
+			    res.redirect('/');
+				}
+			}
+		});
+		*/
+
   } else {
-		res.send("POSTED but login failed (wrong user/pw)");
+		res.redirect('/login?error=unknownuser');
 	}
-	*/
+
+
+
+
+
+
 });
 
 // Logout endpoint

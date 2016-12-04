@@ -6,7 +6,7 @@
     "im79"
   ],
   "dependencies": {
-    "jquery": "3",
+    "jquery": "latest",
     "bootstrap": "latest"
   },
   "license": "MIT",
