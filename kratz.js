@@ -30,21 +30,6 @@ var buildPage = require('./page.inc.js');
 storage.initSync();
 
 
-
-//app.disable('x-powered-by');
-
-/*
-storage.initSync();
-var batman = {
-    first: 'Ilya',
-    last: 'M',
-		password:'11bfb09146a8b8651ea33cdad7ec73c4',
-		access: '3',
-    alias: 'im'
-};
-
-*/
-
 // run app
 app.use(session({
     secret: '2C44-4D44-WppQ38S',
